@@ -12,38 +12,51 @@ import org.springframework.web.context.WebApplicationContext;
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class ShoppingCart{
 
-	private Map<Compras, Integer> items = new LinkedHashMap<Compras, Integer>();
+	private  Map<Integer, Compras> items = new LinkedHashMap<Integer, Compras>();
 
-	public void add(Compras item) {
-		items.put(item, getQuantity(item) + 1);
+	
+	public void add(long numero_compra, Compras item){
+		items.put((int) numero_compra, item);
+
 	}
 
-	public Integer getQuantity(Compras item) {
-		if (!items.containsKey(item)) {
-			items.put(item, 0);
-		}
-		return items.get(item);
+	public void setItems(Map<Integer, Compras> items) {
+		this.items = items;
 	}
 
 	public Integer getQuantity() {
-		return items.values().stream()
-				.reduce(0, (next, accumulator) -> next + accumulator);
+		return items.size();
+		
 	}
 
 	public Collection<Compras> getList() {
-		return items.keySet();
+		return items.values();
 	}
 
 	public double getTotal(Compras item) {
 		return item.getTotal();
 	}
 	
-	public void remove(Compras Compras) {
-		items.remove(Compras);
+	public void remove(Integer chave) {
+		items.remove(chave);
+	}
+
+	
+	
+	public Map<Integer, Compras> getItems() {
+		return items;
 	}
 
 	public boolean isEmpty() {
 		return items.isEmpty();
 	}
 
+
+
+	public Collection<Integer> getValues() {
+		return items.keySet();
+	}
+
+	
+	
 }

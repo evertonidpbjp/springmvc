@@ -97,24 +97,7 @@ public class UsuarioController {
 		    Calendar valor = Calendar.getInstance();
 		    long cartao_milhas = valor.getTimeInMillis();
 		    user.setCartao_milha(cartao_milhas);
-		 /*  
-		    
-		 Role role = new Role();
-		String name = user.getRole();    
-		    	
-		
-			 role.setName(user.getRole());
-			
 	
-			   
-		    System.out.println(name);
-		   
-		    List lista = new ArrayList();
-		    lista.add(role);
-		   user.setRoles(lista);
-		   */
-		    
-		   
 	
 		    userDAO.save(user);
             

@@ -86,7 +86,6 @@ $(function($){
 <th>Identificador</th>
 <th>Origem</th>
 <th> Destino </th>
-<th> Capacidade </th>
 <th> Hora de Partida </th>
 <th> Data</th>
 
@@ -99,12 +98,10 @@ $(function($){
 
 <td> ${voo.destino}  </td>
 
-<td> ${voo.assentos} </td>
-
 <td align="center"> ${voo.hora_partida} </td>
 
 <td> ${voo.data} </td>
-<td> <output id="preco_fixo" > ${voo.preco} </output></td>
+
 
 
 </table>

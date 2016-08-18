@@ -24,6 +24,7 @@ pageEncoding="UTF-8"%>
 </table>
 <form:form name="formulario" method="post" servletRelativeAction="/compras/carrinho"  >
            
+            <input type="hidden" name="numero_compra" value="1" />
             <input type="hidden" name="identificador" value="${voo.identificador}" />
 	       <input type="hidden" name="total" value="${total}" />
 	       <input type="hidden" name="passagens" value="${passagens}" />  

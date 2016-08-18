@@ -13,6 +13,13 @@ public class Compras {
 
 	
 	Integer identificador;
+    Integer numero_compra;
+	
+
+	public Integer getNumero_compra() {
+		return numero_compra;
+	}
+
 	private Integer passagens;
 	private double total;
     
@@ -48,6 +55,11 @@ public class Compras {
 
 	public void setPassageiros(List<Passageiros> passageiros) {
 		this.passageiros = passageiros;
+	}
+
+	public void setNumero_compra(Integer numero_compra) {
+		this.numero_compra = numero_compra;
+		
 	}
 
 	   

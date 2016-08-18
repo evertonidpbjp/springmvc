@@ -13,13 +13,8 @@
  <link rel="stylesheet" href="<c:url value='/resources/css/login.css'/>">
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
  <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.0.min.js"></script>
- <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"> </script>
+ <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"> </script> 
 
-
-  
-  
-  
-  
 <style>  label.error{color: red; padding: 2px}</style>
   
   
