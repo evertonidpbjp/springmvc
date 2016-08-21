@@ -48,6 +48,17 @@ $(function($){
  	  
  	});
     
+    //Calcula total em milhas
+    
+    var distancia = $('#distancia').val(); 
+    var total_milhas = distancia * passagens;
+    $('#total_milhas').attr({
+   	   'value': total_milhas
+   	  
+   	});
+
+    
+    
     // Calcula o total e mostra no campo
     var total = preco * passagens;
     $('#total').attr({
@@ -79,7 +90,7 @@ $(function($){
 </div>
 	</sec:authorize>
 
-
+<!--  
 <h2> Detalhes do Voo</h2>
 <table>
 <tr>
@@ -89,11 +100,13 @@ $(function($){
 <th> Hora de Partida </th>
 <th> Data</th>
 
-<th> Preço </th>
+<th> Preço em milhas </th>
+<th> Preço em reais </th>
 </tr>
 <tr>
 <td> ${voo.identificador}  </td>
 
+<td> ${voo.distancia * 0.62137} </td>
 <td> ${voo.origem} </td>
 
 <td> ${voo.destino}  </td>
@@ -105,7 +118,7 @@ $(function($){
 
 
 </table>
-
+-->
 <h2> Defina o número de assentos</h2>
 
 <form:form name="formulario" method="post" servletRelativeAction="/compras/define_passageiros"  >
@@ -130,15 +143,19 @@ $(function($){
 			<!--   <input id="passagens"  type="number" name="passagens" style="width: 50px" value="1" max='9' min="1"  /> -->
 		 
 		</div>
-	   <label for="preco"> Preço Unitário</label>
+	   <label for="preco"> Distancia em milhas </label>
+		<input name="distancia" id="distancia" type="text" value="${voo.distancia * 0.62137}" readonly/>  <br>
+		<label for="preco"> Preço Unitário</label>
 		<input type="number" name="preco" id="preco" value="${voo.preco}" disabled><br>
 		<label for="preco"> Assentos Disponíveis</label>
 		<input type="number" name="assentos" id="assentos" value="${voo.assentos -1}" disabled><br>
-		 <label for="restantes"> Restantes: </label>
-        <input name="restantes" id="restantes" type="text"  value="${voo.assentos}" disabled/> <br>
+        <input name="restantes" id="restantes" type="hidden"  value="${voo.assentos}" disabled/> <br>
 		<label for="total"> Total : R$ </label>
 		<input name="total" id="total" type="text" value="${voo.preco}" readonly/>  <br>
-       
+        <label for="total_milhas"> Total em milhas :  </label>
+       <input name="total_milhas" id="total_milhas" type="text" value="${voo.distancia * 0.62137}" readonly/>  <br>
+        
+        
         <br>
          
          <input type="submit" value="Continuar ->">

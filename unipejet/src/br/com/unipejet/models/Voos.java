@@ -40,10 +40,6 @@ public class Voos {
 		@NotBlank
 	    private String data;
 	    
-	    
-	    
-	    
-	    
 
 		public Integer getAssentos() {
 			return assentos;

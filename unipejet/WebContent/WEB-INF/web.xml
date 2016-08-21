@@ -26,6 +26,10 @@
 <location>/WEB-INF/500</location>
 </error-page>
 
+<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/WEB-INF/500</location>
+	</error-page>
 
 
 </web-app>

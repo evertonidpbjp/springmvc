@@ -65,12 +65,21 @@ public class UsuarioController {
 
 	//Método que chama o formulario de login
 	@RequestMapping("/")
-	public String homePage(){
-	
-		return "auth/home";
+	public ModelAndView homePage(){
+	   
+		
+		ModelAndView modelAndView = new ModelAndView("auth/home");
+		long contador = userDAO.contaRegistros();
+		modelAndView.addObject("contador", contador);
+		return modelAndView;
+		
 	}
 	
 	
+	@RequestMapping("/login?logout")
+	public String logoutPage(){
+		return "auth/login";
+	}
 	
 	
 	
@@ -86,6 +95,21 @@ public class UsuarioController {
 			
 		}
 		
+		User verifica_login = userDAO.find(user.getLogin());
+		if(verifica_login != null)
+			{
+			
+			System.out.println("Deu águia");
+		  
+		    
+	    redirectAttributes.addFlashAttribute("sucesso", "Usuário já existe, escolha outro login");
+              
+        return new ModelAndView("redirect:cadastro");
+			
+			}
+	    
+		else{
+		
           // Criptografando a senha antes de armazenar no banco
 		    String senha = user.getPassword();
 	        BCryptPasswordEncoder senhaBCrypt = new BCryptPasswordEncoder();
@@ -96,18 +120,19 @@ public class UsuarioController {
 		    
 		    Calendar valor = Calendar.getInstance();
 		    long cartao_milhas = valor.getTimeInMillis();
-		    user.setCartao_milha(cartao_milhas);
-	
+		    user.setCartao_milha(cartao_milhas);	    
+		   
 	
 		    userDAO.save(user);
             
-		
-              		    
+		    
+              	
+		  //  System.out.println(user.getCa)
 		    redirectAttributes.addFlashAttribute("sucesso", "Usuário cadastrado com sucesso");
 	              
 	        return new ModelAndView("redirect:cadastro");
 		
-	
+		}
 	}
 	
 	

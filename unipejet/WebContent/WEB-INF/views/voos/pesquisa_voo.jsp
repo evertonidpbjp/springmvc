@@ -75,7 +75,7 @@ Destino
 
 <th>Origem</th>
 <th> Destino </th>
-<th> Assentos</th>
+<th> Assentos Disponiveis</th>
 <th> Horário</th>
 <th> Duração</th>
 <th> Preço </th>
@@ -91,7 +91,7 @@ Destino
 
 <td> ${voo.destino}  </td>
 
-<td> ${voo.capacidade} </td>
+<td> ${voo.assentos} </td>
 
 <td align="center"> ${voo.hora_partida} </td>
 

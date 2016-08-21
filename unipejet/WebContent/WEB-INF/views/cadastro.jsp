@@ -1,157 +1,105 @@
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Cadastro Usuario </title>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery.js"></script>
- <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js" ></script>
-   
+<html lang="pt-br">
+ <head>
+ <meta charset="UTF-8">
+ <title>Unipê Airlines</title>
+ <link rel="stylesheet" href="<c:url value='/resources/css/login.css'/>">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
+ <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.0.min.js"></script>
+ <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"> </script>
 
-<!-- 
-<script>
 
-$(function($){
-	 
+  
+  
+  
+  
+<style>  label.error{color: red; padding: 2px}</style>
+  
+  
+  </head>
+  <body>
+    <div class="login-wrap">
+    <h2>Registre-se</h2>
+      <div class="form">
 
- 
-      var data = $('#releaseDate').val();
- 
         
+        
+<form:form servletRelativeAction="/cadastrar" method="post"  commandName="user" id="formulario">
+		<span style="color: blue; margin: 10px;"]> ${sucesso } </span>
+    
+    	<div>
+			<label for="login">Login (email)</label>
+			<form:input type="text"  path="login" id="login" name="login" placeholder="Digite o seu email" required="true"/>
+			<form:errors path="login" style="color: red;; margin-left: 30px;" />
+		</div>
     
     
-        $.get("converteData", {'data' : data}, function(resposta) {
-        	$("#out").html("Finalizado");
-        	alert(resposta);
-        	});
-        
-   
-    });
-});
-</script>
--->
-	
-<script>
-
-$(function($){
-	 
-    $('#rg').click(function(){
-   
-    	$("#l_documento").html("RG");
-      
-      $('#documento').attr({
-   	   'placeholder': 'Digite seu Rg',
-      });
-      
-      
-    });
-
-
-    $('#cpf').click(function(){
-     
-    	$("#l_documento").html("CPF");
-    	
-        $('#documento').attr({
-      	   'placeholder': 'Digite seu cpf',
-      	  
-      	});
-        
-        
-      });
-
-
-
-
-});
-</script>
-
-
-<script>
-
-$(function($){
-	 
-   
-    $('#releaseDate').blur(function(){
-
- 
-      var data = $('#releaseDate').val();
- 
-        dataAtual = new Date(data);
-        var ano = dataAtual.getYear();
-        var idade = 116 - ano;
-    	$("#out").html(idade);
-       
-    	$('#idade').attr({
-       	   'value': idade
-       	  
-       	});
-    	
-    });
-});
-</script>
-
-
-</head>
-
-<body>
-
-
-<form:form servletRelativeAction="/cadastrar" method="post"  commandName="user">
-		<span style="color: blue"> ${sucesso } </span>
-		
 	<div>
 			<label for="nome"> Nome</label>
-			<form:input  path="name" id="nome" name="name" type="text"/>
-            <form:errors path="name" style="color: red"/>
+			<form:input  path="name" id="name" name="name" type="text" placeholder="Digite o seu nome"/>
+            <form:errors path="name" style="color: red; margin-left: 30px;"/>
 	</div>
 		
 		
 	<div>
-			<label for="tipo_documento"> Tipo de Documento: </label>
-		    RG  <input name="tipo_documento" type="radio" id="rg" value="rg" checked/>
-			CPF <input name="tipo_documento" type="radio" id="cpf" value="cpf" />
-		 
+			<label for="tipo_documento"> Tipo de Documento: </label><br>
+		    <label for="cpf">CPF</label><input name="tipo_documento" type="radio" id="cpf" value="CPF" />
+		    <label for="id"> RG</label><input name="tipo_documento" type="radio" id="rg" value="RG" checked/>
+		    <form:input path="documento" type="text" id="documento" name="documento" required="true" placeholder="Digite o seu RG"/>
+		 	<form:errors path="documento" style="color: red; text-align: center; "/>
+	
 	</div>
-		
-		
-	<div>
-			<label for="rg" id="l_documento"> RG</label>
-			<form:input path="documento" name="documento" type="text" id="documento" placeholder="Digite o seu Rg"/>
-		    <form:errors path="documento" style="color: red" />
-		</div>
-		
-		
-		<div>
-			<label for="login">Login (email)</label>
-			<form:input  path="login" id="login" name="login" placeholder="Digite o seu email"/>
-			<form:errors path="login" style="color: red"/>
-		</div>
+	
 		<div>
 			<label for="password"> Senha</label>
 			<form:input  path="password" id="password" name="password" type="password"/>
-			<form:errors path="password" style="color: red"/>
+			<form:errors path="password" style="color: red; text-align: center; "/>
 		</div>
-			
+
+       	<div>
+			<label for="password"> Senha Novamente</label>
+			<form:input  path="senha_testa" id="senha_testa" name="senha_testa" type="password"/>
+			<form:errors path="senha_testa" style="color: red; text-align: center; "/>
+		</div>
+   
+		
     <div>
 	<label for="releaseDate">Data de Nascimento</label>
 	<form:input path="releaseDate" type="date" name="releaseDate" id="releaseDate" />
-	<form:errors path="releaseDate" style="color: red"/>
+	<form:errors path="releaseDate" style="color: red; text-align: center; " />
 	</div>
-	<div>
+      
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+  <div align="center">
+ <select name="roles[0].name"  style="width: 260px; height: 25px" id="roles">
+  <option value="ROLE_CLIENTE" selected> CLIENTE (conta limitada)</option>
+  <option value="ROLE_ADMIN"> ADMINISTRADOR</option>
+ </select>	
+  <input type="text" name="role"  id="role" />
+  </div>
+</sec:authorize>
+ 
+ <sec:authorize access="isAnonymous()">  
+  <input  type="hidden" name="role" value="ROLE_CLIENTE"/>
+  <input  type="text" name="roles[0].name" value="ROLE_CLIENTE"/>
+
+</sec:authorize>
+   
+
+   
 			<label for="cartao_milha"></label>
-			<input type="hidden" name="cartao_milha"/>
+			<input type="hidden" name="cartao_milha"/>		
+		
+		   
+			
 				
-		
-		   	<label for="role"></label>
-			<input  type="hidden" name="role" value="ROLE_COMPRADOR"/>
-			</div>		
-		
-		<!--   <output name="output" id="out" >  18</output> anos -->
 		<input name="idade" type="hidden" id="idade">
         <form:errors path="idade" style="color: red"/>
 <div>
@@ -159,6 +107,14 @@ $(function($){
 </div>
 
 </form:form>
-
+        
+        
+        
+     <a href="${spring:mvcUrl('UC#loginPage').build()}"> <p>Já possui uma conta? Acesse aqui legal </p> </a> 
+        
+      </div>
+    </div>
+  <script type="text/javascript" src="<c:url value='/resources/js/arquivo.js'/>"> </script>
+ 
 </body>
 </html>
