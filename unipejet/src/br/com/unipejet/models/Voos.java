@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -40,7 +41,18 @@ public class Voos {
 		@NotBlank
 	    private String data;
 	    
-
+		//Variável que faz o controle de concorrência
+		private Integer versao;
+		
+		
+		
+        @Version
+		public Integer getVersao() {
+			return versao;
+		}
+		public void setVersao(Integer versao) {
+			this.versao = versao;
+		}
 		public Integer getAssentos() {
 			return assentos;
 		}

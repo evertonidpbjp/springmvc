@@ -72,7 +72,7 @@ Destino
 
 
 <tr>
-
+<th> Identificador do Voo </th>
 <th>Origem</th>
 <th> Destino </th>
 <th> Assentos Disponiveis</th>
@@ -87,6 +87,7 @@ Destino
 <c:forEach items="${voos}" var="voo">
 <tr>
 
+<td> ${voo.identificador } </td>
 <td> ${voo.origem} </td>
 
 <td> ${voo.destino}  </td>
@@ -99,12 +100,29 @@ Destino
 <td> ${voo.preco}   </td>
 <td> ${voo.data}</td>
 
-<c:if test="${not empty voo.identificador}">
+<c:set var="mensagem"  value="${voo.assentos }" />
+<c:forEach items="${shoppingCart.list }" var="item" varStatus="contador">
+<c:if test='${voo.identificador == item.identificador}'>
+<c:set var="mensagem"  value="-2" />
 
-<td align="right">
-<a href="${spring:mvcUrl('CC#detalhes_compra').arg(0,voo.identificador).build()}"> Comprar Agora  </a> 
-</td>
 </c:if>
+</c:forEach>
+<td align="center">
+<c:if test='${mensagem == 0}'>  
+<span style="color: red"> Passagens Esgotadas </span>
+</c:if>
+
+<c:if test='${mensagem > 0}'>  
+<a href="${spring:mvcUrl('CC#detalhes_compra').arg(0,voo.identificador).build()}"> Comprar Agora  </a> 
+</c:if>
+
+<c:if test='${mensagem < 0}'>  
+<span style="color: green"> Reservado </span>
+</c:if>
+
+
+
+</td>
 </tr>
 </c:forEach>
 

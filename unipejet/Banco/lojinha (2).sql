@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 21-Ago-2016 às 05:09
+-- Generation Time: 21-Ago-2016 às 19:46
 -- Versão do servidor: 10.1.13-MariaDB
 -- PHP Version: 5.5.35
 
@@ -73,7 +73,18 @@ INSERT INTO `registro` (`numero_registro`, `numero_passagens`, `responsavel`, `t
 (5, 2, 'adm@gmail.com', 600, 621.37),
 (6, 1, 'adm@gmail.com', 800, 1056.329),
 (7, 3, 'adm@gmail.com', 1100, 1304.877),
-(8, 2, 'adm@gmail.com', 500, 248.548);
+(8, 2, 'adm@gmail.com', 500, 248.548),
+(9, 1, 'adm@gmail.com', 600, 1056.329),
+(10, 1, 'adm@gmail.com', 600, 1056.329),
+(11, 1, 'adm@gmail.com', 800, 1056.329),
+(12, 1, 'adm@gmail.com', 800, 1056.329),
+(13, 1, 'adm@gmail.com', 800, 1056.329),
+(14, 1, 'adm@gmail.com', 800, 1056.329),
+(15, 1, 'adm@gmail.com', 800, 1056.329),
+(16, 2, 'adm@gmail.com', 600, 621.37),
+(17, 1, 'adm@gmail.com', 300, 310.685),
+(18, 1, 'adm@gmail.com', 1000, 497.096),
+(19, 3, 'adm@gmail.com', 1600, 1367.014);
 
 -- --------------------------------------------------------
 
@@ -118,7 +129,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`login`, `cartao_milha`, `documento`, `idade`, `name`, `password`, `releaseDate`, `role`, `senha_testa`, `tipo_documento`, `cartao_credito`) VALUES
-('adm@gmail.com', 1471676154634, '111111111111111', 33, 'Administrador', '$2a$10$0geSj.bzGQayz/fhRmt.d.Cam1X6Gevw8GgvpB4yPzCUhtJ7HuVU2', '1983-08-25', 'ROLE_ADMIN', '$2a$10$0geSj.bzGQayz/fhRmt.d.Cam1X6Gevw8GgvpB4yPzCUhtJ7HuVU2', 'RG', 5650.409999999999),
+('adm@gmail.com', 1471676154634, '2222222', 33, 'Administrador', '$2a$10$0geSj.bzGQayz/fhRmt.d.Cam1X6Gevw8GgvpB4yPzCUhtJ7HuVU2', '1983-08-26', 'ROLE_CLIENTE', '$2a$10$0geSj.bzGQayz/fhRmt.d.Cam1X6Gevw8GgvpB4yPzCUhtJ7HuVU2', 'RG', 8632.986),
 ('akira@gmail.com', 1471741931939, '32323', 41, 'akira', '$2a$10$7hZDtGZYXJugX6nrfnUuwuUlfaIoHCHbOxEQCi9JdqkLADaZOsoEy', '1975-08-25', 'ROLE_CLIENTE', '$2a$10$7hZDtGZYXJugX6nrfnUuwuUlfaIoHCHbOxEQCi9JdqkLADaZOsoEy', 'RG', 10000),
 ('alex@gmail.com', 1471741511517, '34242', 52, 'Alex', '$2a$10$GxBtAAxwyEsWYLU2jHbHeeBoLKYIqvVvecCJ0gUerRSZVWDL8BXJa', '1964-08-26', 'ROLE_CLIENTE', '$2a$10$GxBtAAxwyEsWYLU2jHbHeeBoLKYIqvVvecCJ0gUerRSZVWDL8BXJa', 'RG', 0),
 ('ee@jonhs.com', 1471670703373, 'asa', 30, 'sasasa', '$2a$10$McCNS76uHxyd0XraveN4HuptRo2RKMV1xZ9v7hokSQ2ZtQOF4BT6C', '1986-08-03', 'ROLE_CLIENTE', '$2a$10$McCNS76uHxyd0XraveN4HuptRo2RKMV1xZ9v7hokSQ2ZtQOF4BT6C', 'RG', 0),
@@ -156,7 +167,6 @@ INSERT INTO `user_role` (`User_login`, `roles_name`) VALUES
 ('mike@hotmail.com', 'ROLE_CLIENTE'),
 ('maria@gmail.com', 'ROLE_CLIENTE'),
 ('evertonid@ymail.clom', 'ROLE_ADMIN'),
-('adm@gmail.com', 'ROLE_ADMIN'),
 ('Lucas@gmail.com', 'ROLE_CLIENTE'),
 ('everton@gmail.com', 'ROLE_ADMIN'),
 ('alex@gmail.com', 'ROLE_CLIENTE'),
@@ -178,24 +188,27 @@ CREATE TABLE `voos` (
   `origem` varchar(255) NOT NULL,
   `preco` float NOT NULL,
   `assentos` int(11) DEFAULT NULL,
-  `data` varchar(255) NOT NULL
+  `data` varchar(255) NOT NULL,
+  `versao` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `voos`
 --
 
-INSERT INTO `voos` (`identificador`, `capacidade`, `destino`, `distancia`, `duracao`, `hora_partida`, `origem`, `preco`, `assentos`, `data`) VALUES
-(7, '100', 'Rio de Janeiro', '1700', '8 horas', '21:00', 'Recife', 600, 97, '10/12/2016'),
-(12, '100', 'Recife', '1700', '8 horas', '14:00', 'Rio de Janeiro', 800, 97, '15/08/2016'),
-(13, '100', 'Recife', '500', '5 horas', '19:00', 'Fortaleza', 300, 96, '15/10/2016'),
-(14, '100', 'Fortaleza', '500', '5 horas', '17:00', 'Recife', 300, 99, '20/10/2016'),
-(15, '100', 'Fortaleza', '800', '9 horas', '07:00', 'Rio de Janeiro', 600, 99, '25/08/2016'),
-(16, '100', 'Rio de Janeiro', '800', '7 horas', '15:00', 'Fortaleza', 1000, 99, '11/09/2016'),
-(21, '100', 'Rio de Janeiro', '1700', '8 horas', '21:00', 'Recife', 600, 100, '15/09/2016'),
-(22, '100', 'Recife', '1700', '8 horas', '14:00', 'Rio de Janeiro', 800, 100, '15/08/2016'),
-(23, '100', 'Fortaleza', '100 km', '4 horas', '00:00', 'Recife ', 100, 100, '17/08/2016'),
-(24, '100', 'Fortaleza', '200', '4 horas', '00:00', 'Recife', 250, 96, '19/08/2016');
+INSERT INTO `voos` (`identificador`, `capacidade`, `destino`, `distancia`, `duracao`, `hora_partida`, `origem`, `preco`, `assentos`, `data`, `versao`) VALUES
+(12, '100', 'Recife', '1700', '8 horas', '14:00', 'Rio de Janeiro', 800, 0, '15/08/2016', NULL),
+(13, '100', 'Recife', '500', '5 horas', '19:00', 'Fortaleza', 300, 93, '15/10/2016', NULL),
+(14, '100', 'Fortaleza', '500', '5 horas', '17:00', 'Recife', 300, 0, '20/10/2016', NULL),
+(15, '100', 'Fortaleza', '800', '9 horas', '07:00', 'Rio de Janeiro', 600, 98, '25/08/2016', NULL),
+(16, '100', 'Rio de Janeiro', '800', '7 horas', '15:00', 'Fortaleza', 1000, 0, '11/09/2016', NULL),
+(21, '100', 'Rio de Janeiro', '1700', '8 horas', '21:00', 'Recife', 600, 100, '15/09/2016', NULL),
+(22, '100', 'Recife', '1700', '8 horas', '14:00', 'Rio de Janeiro', 800, 99, '15/08/2016', NULL),
+(23, '100', 'Fortaleza', '100 km', '4 horas', '00:00', 'Recife ', 100, 100, '17/08/2016', NULL),
+(24, '100', 'Fortaleza', '200', '4 horas', '00:00', 'Recife', 250, 96, '19/08/2016', NULL),
+(25, '100', 'Rio de Janeiro', '500', '3 horas', '05:00', 'Recife', 890, 100, '28/08/2016', NULL),
+(26, '100', 'Rio de Janeiro', '900', '4 horas', '04:05', 'Recife', 700, 99, '30/08/2016', NULL),
+(27, '100', 'Recife', '800', '5 horas', '19:00', 'Fortaleza', 800, 100, '21/08/2016', NULL);
 
 --
 -- Indexes for dumped tables
@@ -257,12 +270,12 @@ ALTER TABLE `produto`
 -- AUTO_INCREMENT for table `registro`
 --
 ALTER TABLE `registro`
-  MODIFY `numero_registro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `numero_registro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `voos`
 --
 ALTER TABLE `voos`
-  MODIFY `identificador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `identificador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- Constraints for dumped tables
 --

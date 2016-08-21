@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -15,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
+import br.com.unipejet.infra.NegocioException;
 import br.com.unipejet.models.BookType;
 import br.com.unipejet.models.Produto;
 import br.com.unipejet.models.User;
@@ -53,8 +55,18 @@ public class VoosDAO {
 
 
 	// Método para editar voo
-	public void altera(Voos voo) {
-	voo_manager.merge(voo);
+	public String altera(Voos voo) {
+	
+		
+		try {
+			voo_manager.merge(voo);
+			
+		} catch (OptimisticLockException e) {
+            return "erro";
+		}
+		return "ok";
+		
+	
 	}
 
 	// Método que remove um voo

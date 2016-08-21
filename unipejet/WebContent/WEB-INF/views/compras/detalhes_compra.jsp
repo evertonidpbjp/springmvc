@@ -90,8 +90,9 @@ $(function($){
 </div>
 	</sec:authorize>
 
-<!--  
-<h2> Detalhes do Voo</h2>
+  
+<h2> Voo de número ${voo.identificador} de ${voo.origem } para ${voo.destino} </h2>
+<!--
 <table>
 <tr>
 <th>Identificador</th>
@@ -121,26 +122,36 @@ $(function($){
 -->
 <h2> Defina o número de assentos</h2>
 
-<form:form name="formulario" method="post" servletRelativeAction="/compras/define_passageiros"  >
+<form:form name="formulario" method="post" servletRelativeAction="/compras/define_passageiros" id="formulario" >
 
 		<input type="hidden" name="identificador" id="identificador" value="${voo.identificador}" />
 		<div>
 			<label for="passagens"> Número de Passagens</label>
 			
-			<select name="passagens" id="passagens"> 
-			<option value="1"> 1 </option>
-			<option value="2"> 2 </option>
-			<option value="3"> 3 </option>
-			<option value="4"> 4 </option>
-			<option value="5"> 5 </option>
-			<option value="6"> 6 </option>
-			<option value="7"> 7 </option>
-			<option value="8"> 8 </option>
-			<option value="9"> 9 </option>
+			<c:set var="tamanho"  value="0"/>
+			<c:if test='${voo.assentos >= 9}'/> 
+			<c:if test='${voo.assentos <  9}'/> 
+			<c:choose>
+  			<c:when test="${voo.assentos >= 9}">
+ 				<c:set var="tamanho"  value="9" />
+  			</c:when>
+ 		    <c:when test="${voo.assentos < 9}">
+  			    <c:set var="tamanho"  value="${voo.assentos}"/>
+  			</c:when>
+ 		 <c:otherwise>
+  				<c:set var="tamanho"  value="9" />
+  		</c:otherwise>
+		</c:choose>
+			
+			
+			<select name="passagens" id="passagens"  >  
+			<c:forEach begin="1" end="${tamanho}" varStatus="loop">
+			<option value="${loop.index}"> ${loop.index} </option>
+			</c:forEach>
 			</select>
 			
 			
-			<!--   <input id="passagens"  type="number" name="passagens" style="width: 50px" value="1" max='9' min="1"  /> -->
+			 <!--   <input id="passagens"  type="number" name="passagens" style="width: 50px" value="1" max='${voo.assentos}' min="1"  /> --> 
 		 
 		</div>
 	   <label for="preco"> Distancia em milhas </label>
@@ -148,8 +159,8 @@ $(function($){
 		<label for="preco"> Preço Unitário</label>
 		<input type="number" name="preco" id="preco" value="${voo.preco}" disabled><br>
 		<label for="preco"> Assentos Disponíveis</label>
-		<input type="number" name="assentos" id="assentos" value="${voo.assentos -1}" disabled><br>
-        <input name="restantes" id="restantes" type="hidden"  value="${voo.assentos}" disabled/> <br>
+		<input type="number" name="assentos" id="assentos" value="${voo.assentos}" disabled><br>
+        <input name="restantes" id="restantes" type="text"  value="${voo.assentos}"   readonly/> <br>
 		<label for="total"> Total : R$ </label>
 		<input name="total" id="total" type="text" value="${voo.preco}" readonly/>  <br>
         <label for="total_milhas"> Total em milhas :  </label>
@@ -158,7 +169,7 @@ $(function($){
         
         <br>
          
-         <input type="submit" value="Continuar ->">
+         <input type="submit" value="Continuar ->" id="sub">
 
 
 
@@ -181,8 +192,8 @@ $(function($){
   
     var restantes = assentos - passagens;
  
-    
-  //Verifia se o número de assentos ainda está disponível
+  
+    //Verifia se o número de assentos ainda está disponível
     if(restantes <= 0)
     	{
     	 
@@ -192,11 +203,14 @@ $(function($){
     	    	});
     	      
     	    
+    	    
     	
     	
     	}
-  
 
+    
+
+   
    
     
     $('#restantes').attr({
@@ -223,7 +237,10 @@ $(function($){
     });
 
 
+
 </script>
+
+
 
 </body>
 </html>

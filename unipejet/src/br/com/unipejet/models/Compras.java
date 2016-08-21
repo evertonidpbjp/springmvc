@@ -13,20 +13,31 @@ public class Compras {
 	
 	private Integer identificador;
     private Integer numero_compra;
+	private Integer restantes;
+    
 	
+	
+    public Integer getRestantes() {
+		return restantes;
+	}
+
+
+
+	public void setRestantes(Integer restantes) {
+		this.restantes = restantes;
+	}
+
+	//Número de passagens compradas
     private Integer passagens;
-	//Total em reais (considera o preço do número de passagens vezes o preço)
+	
+    //Total em reais (considera o preço do número de passagens vezes o preço)
     private double total;
    
     //Total em milhas (considera o número de passagens vezes a distancia.
 	private double total_milhas;
+	
+	//Lista dos passageiros para essa compra específica
 	private List<Passageiros> passageiros = new ArrayList<Passageiros>();
-    
-    
-    
-    
-    
-    
     
     
 

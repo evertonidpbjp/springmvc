@@ -47,6 +47,11 @@ $(document).ready(function(){
        required: true
 
 	},
+	
+	 data: {
+	       required: true
+
+		},
 
 	 hora_partida: {
 	   required: true,
@@ -90,6 +95,11 @@ $(document).ready(function(){
 
 	},
 
+	data: {
+	       required: "Verifique a Data"
+
+		},
+	
 	 hora_partida: {
 	   required: "Campo obrigatório"
 	  
@@ -165,7 +175,12 @@ $(document).ready(function(){
 	<form:input path="hora_partida" type="time" name="hora_partida" id="hora_partida" placeholder="Defina o horário" />
 	<form:errors path="hora_partida" style="color: red"/>
 	</div>
-			
+   
+       <div>
+	<label for="data"> Data</label>
+	<form:input path="data" type="date" name="data" id="data" />
+	<form:errors path="data" style="color: red"/>
+	</div>
 			
 		
 <div>

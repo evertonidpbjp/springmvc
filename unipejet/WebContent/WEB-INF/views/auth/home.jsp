@@ -21,6 +21,8 @@ Bem vindo a página inicial    <a href="${spring:mvcUrl('CC#carrinho').build()}"
 		<div>
 Olá ${user.name} <br>
 Seus créditos em Milhas:<fmt:formatNumber type="number" maxFractionDigits="3" value="${user.cartao_credito}" />
+<br>
+<span> ${msg}</span>
 <c:set var="usuario" scope="session" value="${user.login}"/>
 
 </div>

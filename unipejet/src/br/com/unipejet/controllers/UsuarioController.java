@@ -63,7 +63,7 @@ public class UsuarioController {
 	}
 	
 
-	//Método que chama o formulario de login
+	//Método que chama a página inicial (a home)
 	@RequestMapping("/")
 	public ModelAndView homePage(){
 	   
@@ -190,7 +190,7 @@ public class UsuarioController {
     	      user.setPassword(password);
               user.setSenha_testa(password);
           }
-   		    user.setRole("ROLE_COMPRADOR");
+   		 
    		    userDAO.altera(user);
           
    		    redirectAttributes.addFlashAttribute("sucesso", "Usuário editado com sucesso");

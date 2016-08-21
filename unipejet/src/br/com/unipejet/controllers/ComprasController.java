@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.unipejet.daos.RegistroCompraDAO;
 import br.com.unipejet.daos.UserDAO;
@@ -53,7 +54,8 @@ public class ComprasController {
 
 	// Método que chama o formulario para definir os passageiros
 	@RequestMapping("/compras/define_passageiros")
-	public ModelAndView define_passageiros(Integer identificador, double total, Integer passagens, double total_milhas) {
+	public ModelAndView define_passageiros(Integer identificador, double total, Integer passagens,
+			double total_milhas) {
 		ModelAndView modelAndView = new ModelAndView("compras/define_passageiros");
 		Voos voo = voosDAO.find(identificador);
 		modelAndView.addObject("total", total);
@@ -89,15 +91,34 @@ public class ComprasController {
 
 	// Chamando página de pagamento
 	@RequestMapping("compras/finalizar_compra")
-	public ModelAndView finalizar_compra(@Valid Registro registro, BindingResult bindingResult) {
+	public ModelAndView finalizar_compra(@Valid Registro registro, BindingResult bindingResult,
+			RedirectAttributes red) {
 		if (bindingResult.hasErrors()) {
 			return carrinho(registro);
 
 		}
 
-		// Varre o carrinho de compras subtraindo de cada voo o número de assentos disponíveis
+		
+		// Cria o objeto modelAndView
+		ModelAndView modelAndView = new ModelAndView("redirect:/");
+		// Cria o mapa que representa os objetos do tipo compra
+		Map<Integer, Compras> mapa = shoppingCart.getItems();  
+		
+		//Verifica se há saldo suficiente no cartao de milhas para continuar a operação
+		double total_pago_em_milhas = registro.getTotal_milhas();
+		String responsavel = registro.getResponsavel();
+		User user = userDAO.find(responsavel);
+		double cartao_credito = user.getCartao_credito();
+		if (cartao_credito < total_pago_em_milhas) {
 
-		Map<Integer, Compras> mapa = shoppingCart.getItems();
+			red.addFlashAttribute("msg", "Voce Nao tem saldo em milhas suficiente para finalizar a compra");
+			return modelAndView;
+			
+		}
+			
+		
+		// Varre o carrinho de compras subtraindo de cada voo o número de assentos disponíveis
+	
 		Set<Integer> chaves = mapa.keySet();
 		for (Integer chave : chaves) {
 			Compras compra = mapa.get(chave);
@@ -105,24 +126,36 @@ public class ComprasController {
 			Integer numero_passagens = compra.getPassagens();
 			Voos voo = voosDAO.find(identificador);
 			Integer assentos_totais = voo.getAssentos();
+
+			if (numero_passagens > assentos_totais) {
+
+				red.addFlashAttribute("msg",
+						"Erro de concorrencia, os assentos disponíveis já foram compradas por outra pessoa");
+				mapa.clear();
+				return modelAndView;
+			}
+
 			Integer assentos_restantes = assentos_totais - numero_passagens;
 			voo.setAssentos(assentos_restantes);
-			voosDAO.altera(voo);
+			String concorrencia = voosDAO.altera(voo);
+
+			if (concorrencia == "erro") {
+				red.addFlashAttribute("msg", "Erro de Concorrencia, outro usuário já comprou a sua passagem");
+				return modelAndView;
+
+			}
 
 		}
 
-		double total_pago_em_milhas = registro.getTotal_milhas();
-		String responsavel = registro.getResponsavel();
-		User user = userDAO.find(responsavel);
-		double cartao_credito = user.getCartao_credito();
+
 		double cartao_credito_restante = cartao_credito - total_pago_em_milhas;
 		user.setCartao_credito(cartao_credito_restante);
-        userDAO.altera(user);
+		userDAO.altera(user);
 		rcDAO.save(registro);
-		
-		
+
+		red.addFlashAttribute("msg", "Compra Realizada com Sucesso");
 		mapa.clear();
-		return new ModelAndView("redirect:/");
+		return modelAndView;
 
 	}
 
