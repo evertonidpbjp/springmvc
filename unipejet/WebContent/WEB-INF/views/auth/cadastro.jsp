@@ -123,5 +123,6 @@
     </div>
 <script type="text/javascript" src="<c:url value='/resources/js/arquivo.js'/>"> </script> 
  
+ 
 </body>
 </html>

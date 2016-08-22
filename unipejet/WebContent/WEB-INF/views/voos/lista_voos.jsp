@@ -25,9 +25,9 @@ Olá ${user.name}
 
 <span style="color:blue; text-align: center"> ${sucesso} </span>
 
-
-<a href="${spring:mvcUrl('VC#cadastroVoos').build()}">Novo Voo </a> <br>
-
+ <a  href="${spring:mvcUrl('UC#homePage').build()}"> Voltar Para a Home</a> <br>
+<a href="${spring:mvcUrl('VC#cadastroVoos').build()}">Novo Voo </a>
+<br>
 
 <table>
 <tr>

@@ -30,7 +30,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import com.google.common.cache.CacheBuilder;
 
 import br.com.unipejet.controllers.UsuarioController;
-import br.com.unipejet.daos.ProdutoDAO;
+
 import br.com.unipejet.daos.UserDAO;
 import br.com.unipejet.infra.FileSaver;
 import br.com.unipejet.models.Role;

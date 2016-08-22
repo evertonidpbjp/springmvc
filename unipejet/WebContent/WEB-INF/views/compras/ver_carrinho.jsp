@@ -13,6 +13,8 @@ pageEncoding="UTF-8"%>
 
 </head>
 <body>
+<a href="${spring:mvcUrl('UC#homePage').build()}"><i class="fa fa-fw fa-dashboard"></i> Voltar para a Home</a>
+
 <h2> Resumo Geral da Compra </h2>
 <tbody>
 <c:set var="total" value="0"/>

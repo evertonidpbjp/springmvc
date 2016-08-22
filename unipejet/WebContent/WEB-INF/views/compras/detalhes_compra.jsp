@@ -81,7 +81,8 @@ $(function($){
 </head>
 <body>
 
-<a href="${spring:mvcUrl('CC#carrinho').build()}"> Seu carrinho (${shoppingCart.quantity})</a>
+<a href="${spring:mvcUrl('CC#carrinho').build()}"> Seu carrinho (${shoppingCart.quantity})</a> <br> 
+<a href="${spring:mvcUrl('UC#homePage').build()}"><i class="fa fa-fw fa-dashboard"></i> Voltar para a Home</a> <br>
 <sec:authorize access="isAuthenticated()">
 		<sec:authentication property="principal" var="user"/>
 		<div>
@@ -160,7 +161,7 @@ $(function($){
 		<input type="number" name="preco" id="preco" value="${voo.preco}" disabled><br>
 		<label for="preco"> Assentos Disponíveis</label>
 		<input type="number" name="assentos" id="assentos" value="${voo.assentos}" disabled><br>
-        <input name="restantes" id="restantes" type="text"  value="${voo.assentos}"   readonly/> <br>
+        <input name="restantes" id="restantes" type="hidden"  value="${voo.assentos}"   readonly/> <br>
 		<label for="total"> Total : R$ </label>
 		<input name="total" id="total" type="text" value="${voo.preco}" readonly/>  <br>
         <label for="total_milhas"> Total em milhas :  </label>

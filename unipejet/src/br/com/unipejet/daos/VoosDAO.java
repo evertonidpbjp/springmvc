@@ -17,8 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import br.com.unipejet.infra.NegocioException;
-import br.com.unipejet.models.BookType;
-import br.com.unipejet.models.Produto;
+
 import br.com.unipejet.models.User;
 import br.com.unipejet.models.Voos;
 
@@ -105,7 +104,14 @@ public class VoosDAO {
        
 	}
 		
-		
+	public long contaRegistros(){
+		String consulta = "SELECT COUNT(v) FROM Voos v";
+		TypedQuery<Long> query = voo_manager.createQuery(consulta, Long.class);
+		Long resultado = query.getSingleResult();
+
+		return resultado;
+
+		}
 		
 	}
 		

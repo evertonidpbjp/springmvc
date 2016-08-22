@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.unipejet.daos.VoosDAO;
-import br.com.unipejet.models.Produto;
+
 import br.com.unipejet.models.User;
 import br.com.unipejet.models.Voos;
 
@@ -62,7 +62,7 @@ public class VoosController {
 		        System.out.println(novaData);
 		    
 		    
-		    
+		    System.out.print("Concluido");
 		    voosDAO.save(voo);
        
 		    redirectAttributes.addFlashAttribute("sucesso", "Voo cadastrado com sucesso");

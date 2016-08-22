@@ -14,8 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
-import br.com.unipejet.models.BookType;
-import br.com.unipejet.models.Produto;
+
 import br.com.unipejet.models.Role;
 import br.com.unipejet.models.User;
 import br.com.unipejet.models.Voos;

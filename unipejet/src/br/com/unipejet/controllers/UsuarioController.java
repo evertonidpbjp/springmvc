@@ -26,14 +26,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.com.unipejet.daos.ProdutoDAO;
 import br.com.unipejet.daos.UserDAO;
-import br.com.unipejet.models.BookType;
-import br.com.unipejet.models.Produto;
+import br.com.unipejet.daos.VoosDAO;
+
 import br.com.unipejet.models.Role;
 import br.com.unipejet.models.User;
 import br.com.unipejet.models.Voos;
-import br.com.unipejet.teste.TestaConexao;
+
 import br.com.unipejet.validation.UserValidator;
 
 
@@ -45,6 +44,8 @@ public class UsuarioController {
 	@Autowired
 	private UserDAO userDAO;
 	
+	@Autowired
+	private VoosDAO voosDAO;
 
 	
 	//Método que chama o formulario de login
@@ -70,15 +71,17 @@ public class UsuarioController {
 		
 		ModelAndView modelAndView = new ModelAndView("auth/home");
 		long contador = userDAO.contaRegistros();
+		long contador_voo = voosDAO.contaRegistros();
+		modelAndView.addObject("contador_voo", contador_voo);
 		modelAndView.addObject("contador", contador);
 		return modelAndView;
 		
 	}
 	
 	
-	@RequestMapping("/login?logout")
+	@RequestMapping("/logout")
 	public String logoutPage(){
-		return "auth/login";
+		return "auth/login?logout";
 	}
 	
 	
@@ -172,7 +175,7 @@ public class UsuarioController {
    		 
    		
    		}
-   		
+   		/*
    		  String senha_testa  = user.getSenha_testa(); 
    		  String password = user.getPassword();
           if (senha_testa.equals(password)){
@@ -182,20 +185,20 @@ public class UsuarioController {
             user.setSenha_testa(senha_testa);
         	  
           }
-   		
-          else 
-          {
-        	  BCryptPasswordEncoder senhaBCrypt = new BCryptPasswordEncoder();
-    	      password  = senhaBCrypt.encode(password);
-    	      user.setPassword(password);
-              user.setSenha_testa(password);
-          }
-   		 
-   		    userDAO.altera(user);
+   		 */
+         
           
-   		    redirectAttributes.addFlashAttribute("sucesso", "Usuário editado com sucesso");
+        	  BCryptPasswordEncoder senhaBCrypt = new BCryptPasswordEncoder();
+    	      String senha_cripto  = senhaBCrypt.encode(user.getPassword());
+    	      user.setPassword(senha_cripto);
+              user.setSenha_testa(senha_cripto);
+          
+   		 
+   		       userDAO.altera(user);
+          
+   		      redirectAttributes.addFlashAttribute("sucesso", "Usuário editado com sucesso");
    	              
-   	        return new ModelAndView("redirect:listar");
+   	           return new ModelAndView("redirect:/");
    		
    	
    	}
@@ -204,16 +207,80 @@ public class UsuarioController {
    	
    	// Remove usuario cadastrado
     	@RequestMapping("/remove_usuario")
-    	public String remove_usuario(String login) {
+    	public ModelAndView remove_usuario(String login, RedirectAttributes red) {
     	
     		
         User user = userDAO.find(login);
         userDAO.remove(user);
-        return "redirect:/listar";
+       
+        red.addFlashAttribute("sucesso", "Usuário removido com sucesso");
+        return new  ModelAndView("redirect:/listar");
     	}
 	   
        
 	   
+    	// Método que chama o formulario de cadastro
+    	@RequestMapping("/novo_usuario")
+    	public ModelAndView novo_usuario(User user){
+    	ModelAndView modelAndView = new ModelAndView("auth/novo_usuario");
+    	return modelAndView;
+    	}
+    	
+    	
+    	
+    	
+    	// Método que efetivamente cadastra os usuários 
+    	
+    	@RequestMapping(value="/salva_usuario",method=RequestMethod.POST)
+    	public ModelAndView salva_usuario(@Valid User user, BindingResult bindingResult,
+    			RedirectAttributes redirectAttributes) throws SQLException{
+    		       
+    		if(bindingResult.hasErrors()){
+    			return novo_usuario(user);
+    			
+    		}
+    		
+    		User verifica_login = userDAO.find(user.getLogin());
+    		if(verifica_login != null)
+    			{
+    			
+    			System.out.println("Deu águia");
+    		  
+    		    
+    	    redirectAttributes.addFlashAttribute("sucesso", "Usuário já existe, escolha outro login");
+                  
+            return new ModelAndView("redirect:novo_usuario");
+    			
+    			}
+    	    
+    		else{
+    		
+              // Criptografando a senha antes de armazenar no banco
+    		    String senha = user.getPassword();
+    	        BCryptPasswordEncoder senhaBCrypt = new BCryptPasswordEncoder();
+    	        senha  = senhaBCrypt.encode(senha);
+    		    user.setPassword(senha);
+    	        user.setSenha_testa(senha);
+    		  // Gerando um número qualquer para o cartao de milhas  
+    		    
+    		    Calendar valor = Calendar.getInstance();
+    		    long cartao_milhas = valor.getTimeInMillis();
+    		    user.setCartao_milha(cartao_milhas);	    
+    		   
+    	
+    		    userDAO.save(user);
+                
+    		    
+                  	
+    		  //  System.out.println(user.getCa)
+    		    redirectAttributes.addFlashAttribute("sucesso", "Usuário cadastrado com sucesso");
+    	              
+    	        return new ModelAndView("redirect:listar");
+    		
+    		}
+    	}
+    	
+    	
 	   
 	
 /*

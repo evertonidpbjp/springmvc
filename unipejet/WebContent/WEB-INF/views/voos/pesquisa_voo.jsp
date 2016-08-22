@@ -39,7 +39,9 @@ $(function($){
 </head>
 
 <body>
-<a href="${spring:mvcUrl('CC#carrinho').build()}"> Seu carrinho (${shoppingCart.quantity})</a>
+<a href="${spring:mvcUrl('CC#carrinho').build()}"> Ver Carrinho (${shoppingCart.quantity})</a>
+<br>
+ <a  href="${spring:mvcUrl('UC#homePage').build()}"> Voltar para a Home </a>
 
 <form:form servletRelativeAction="/voos/pesquisa_voo" method="post"  commandName="">
 		<span style="color: blue"> ${sucesso } </span>

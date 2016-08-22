@@ -33,12 +33,12 @@ public class Voos {
 	    private String distancia;
 	    @Min(value=1)
 	    private float preco;
-	    @NotNull
+	   @NotNull
 	    private Integer capacidade;
 	    @NotBlank
 	    private String hora_partida;
 	    private Integer assentos;
-		@NotBlank
+	@NotBlank
 	    private String data;
 	    
 		//Variável que faz o controle de concorrência
